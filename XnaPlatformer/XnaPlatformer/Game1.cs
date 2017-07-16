@@ -19,6 +19,8 @@ namespace XnaPlatformer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        TimeSpan startSpan;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
