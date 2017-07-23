@@ -19,7 +19,7 @@ namespace XnaPlatformer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Brick brick;
-       
+        List<Brick> bricks;
 
         public Game1()
         {
@@ -42,6 +42,7 @@ namespace XnaPlatformer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             brick = new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(80, 80), Color.White);
+            bricks = new List<Brick>();
             // TODO: use this.Content to load your game content here
         }
 
@@ -62,7 +63,10 @@ namespace XnaPlatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            brick.Update();
+            for(int i = 0; i < bricks.Count; i++)
+            {
+                bricks[i].Draw(spriteBatch);
+            }
 
             base.Update(gameTime);
         }
