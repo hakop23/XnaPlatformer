@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace XnaPlatformer.Gameobjects
+namespace XnaPlatformer
 {
-     class Sprite
+     public class Sprite
     {
         protected Vector2 position;
         protected Color color;
@@ -22,7 +22,7 @@ namespace XnaPlatformer.Gameobjects
         }
         public virtual void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, position, color);
+        spritebatch.Draw(texture, position, color);
         } 
         public virtual void Update()
         {

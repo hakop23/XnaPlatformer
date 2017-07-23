@@ -18,13 +18,14 @@ namespace XnaPlatformer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        Brick brick;
        
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
         }
 
         
@@ -40,7 +41,7 @@ namespace XnaPlatformer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            brick = new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(80, 80), Color.White);
             // TODO: use this.Content to load your game content here
         }
 
@@ -61,7 +62,7 @@ namespace XnaPlatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            brick.Update();
 
             base.Update(gameTime);
         }
@@ -72,11 +73,15 @@ namespace XnaPlatformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            spriteBatch.Begin();
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            
+            brick.Draw(spriteBatch);
             // TODO: Add your drawing code here
-
+           
             base.Draw(gameTime);
+             spriteBatch.End();
+           
         }
     }
 }
