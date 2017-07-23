@@ -17,7 +17,7 @@ namespace XnaPlatformer
             : base(texture, position, color)
         {
             this.frames = frames;
-            currentFrame = 0;
+            currentFrame = 0;            
         }
 
 
