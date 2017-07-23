@@ -24,7 +24,7 @@ namespace XnaPlatformer
         {
         spritebatch.Draw(texture, position, color);
         } 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             hitbox = new Rectangle((int)position.X, (int)position.Y, (int)texture.Width, (int)texture.Height);
         }

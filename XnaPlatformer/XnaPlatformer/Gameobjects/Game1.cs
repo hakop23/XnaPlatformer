@@ -20,7 +20,7 @@ namespace XnaPlatformer
         SpriteBatch spriteBatch;
         Brick brick;
         List<Brick> bricks;
-
+        Player player;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,7 +41,23 @@ namespace XnaPlatformer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            List<Rectangle> playerFrames = new List<Rectangle>();
+
+            playerFrames.Add(new Rectangle(38, 16, 42, 48));
+            playerFrames.Add(new Rectangle(102, 16, 42, 48));
+            playerFrames.Add(new Rectangle(166, 16, 40, 48));
+            playerFrames.Add(new Rectangle(228, 20, 48, 44));
+            playerFrames.Add(new Rectangle(298, 16, 32, 48));
+            playerFrames.Add(new Rectangle(356, 20, 42, 44));
+            playerFrames.Add(new Rectangle(416, 8, 52, 56));
+            playerFrames.Add(new Rectangle(288, 66, 52, 60));
+            playerFrames.Add(new Rectangle(352, 66, 58, 60));
+            playerFrames.Add(new Rectangle(164, 80, 52, 48));
+
+
             brick = new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(80, 80), Color.White);
+            player = new Player(Content.Load<Texture2D>("FightingAndJumpingSpriteSheet"), new Vector2(50, 80), Color.White, new Vector2(0), playerFrames);
             bricks = new List<Brick>();
             // TODO: use this.Content to load your game content here
         }
@@ -67,7 +83,7 @@ namespace XnaPlatformer
             {
                 bricks[i].Draw(spriteBatch);
             }
-
+            player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -82,7 +98,7 @@ namespace XnaPlatformer
             
             brick.Draw(spriteBatch);
             // TODO: Add your drawing code here
-           
+            player.Draw(spriteBatch);
             base.Draw(gameTime);
              spriteBatch.End();
            
