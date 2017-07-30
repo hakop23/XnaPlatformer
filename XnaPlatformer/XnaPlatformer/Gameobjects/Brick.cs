@@ -9,8 +9,8 @@ namespace XnaPlatformer
 {
     public class Brick : Sprite
     {
-        public Brick(Texture2D texture, Vector2 position, Color color) 
-            : base(texture, position, color)
+        public Brick(Texture2D texture, Vector2 position, Color color, float rotation, Vector2 origin, float scale) 
+            : base(texture, position, color, rotation, origin, scale)
         {
 
         }

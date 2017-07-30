@@ -28,7 +28,7 @@ namespace XnaPlatformer
 
         }
 
-        
+
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -36,7 +36,7 @@ namespace XnaPlatformer
             base.Initialize();
         }
 
-        
+
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -44,25 +44,27 @@ namespace XnaPlatformer
 
             List<Rectangle> playerFrames = new List<Rectangle>();
 
-            playerFrames.Add(new Rectangle(38, 16, 42, 48));
-            playerFrames.Add(new Rectangle(102, 16, 42, 48));
-            playerFrames.Add(new Rectangle(166, 16, 40, 48));
-            playerFrames.Add(new Rectangle(228, 20, 48, 44));
-            playerFrames.Add(new Rectangle(298, 16, 32, 48));
-            playerFrames.Add(new Rectangle(356, 20, 42, 44));
-            playerFrames.Add(new Rectangle(416, 8, 52, 56));
-            playerFrames.Add(new Rectangle(288, 66, 52, 60));
-            playerFrames.Add(new Rectangle(352, 66, 58, 60));
-            playerFrames.Add(new Rectangle(164, 80, 52, 48));
+            //idle
+            playerFrames.Add(new Rectangle(12, 16, 42, 48));
+            //playerFrames.Add(new Rectangle(72, 16, 42, 48));
+            //playerFrames.Add(new Rectangle(140, 16, 40, 48));
 
+            //running
+            playerFrames.Add(new Rectangle(202, 20, 48, 44));
+            playerFrames.Add(new Rectangle(272, 16, 32, 47));
+            playerFrames.Add(new Rectangle(330, 20, 41, 44));
 
-            brick = new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(80, 80), Color.White);
-            player = new Player(Content.Load<Texture2D>("FightingAndJumpingSpriteSheet"), new Vector2(50, 80), Color.White, new Vector2(0), playerFrames);
+            //jumping
+            playerFrames.Add(new Rectangle(390, 8, 52, 56));
+            playerFrames.Add(new Rectangle(261, 66, 53, 60));
+
+            brick = new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(80, 80), Color.White, 0F, new Vector2(), 1f);
+            player = new Player(Content.Load<Texture2D>("FightingAndJumpingSpriteSheet"), new Vector2(50, 80), Color.White, 0f, new Vector2(), 1f, new Vector2(0, 0), playerFrames);
             bricks = new List<Brick>();
             // TODO: use this.Content to load your game content here
         }
 
-       
+
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
@@ -79,7 +81,7 @@ namespace XnaPlatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            for(int i = 0; i < bricks.Count; i++)
+            for (int i = 0; i < bricks.Count; i++)
             {
                 bricks[i].Draw(spriteBatch);
             }
@@ -95,13 +97,13 @@ namespace XnaPlatformer
         {
             spriteBatch.Begin();
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
             brick.Draw(spriteBatch);
             // TODO: Add your drawing code here
             player.Draw(spriteBatch);
             base.Draw(gameTime);
-             spriteBatch.End();
-           
+            spriteBatch.End();
+
         }
     }
 }
