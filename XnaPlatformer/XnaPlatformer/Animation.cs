@@ -51,6 +51,8 @@ namespace XnaPlatformer
                     }
                 }
                 timer = TimeSpan.Zero;
+
+               
             }
         }
     }

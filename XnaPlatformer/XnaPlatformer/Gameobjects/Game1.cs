@@ -18,14 +18,15 @@ namespace XnaPlatformer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Brick brick;
+
         List<Brick> bricks;
         Player player;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            graphics.PreferredBackBufferWidth = 600;
+            graphics.PreferredBackBufferHeight = 800;
         }
 
 
@@ -39,28 +40,38 @@ namespace XnaPlatformer
 
         protected override void LoadContent()
         {
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             List<Rectangle> playerFrames = new List<Rectangle>();
+            Dictionary<Player.State, Animation> playerAnimations = new Dictionary<Player.State, Animation>();
 
             //idle
-            playerFrames.Add(new Rectangle(12, 16, 42, 48));
-            //playerFrames.Add(new Rectangle(72, 16, 42, 48));
-            //playerFrames.Add(new Rectangle(140, 16, 40, 48));
+            List<Rectangle> idleFrames = new List<Rectangle>();
+            idleFrames.Add(new Rectangle(12, 16, 42, 48));
+            idleFrames.Add(new Rectangle(72, 16, 42, 48));
+            idleFrames.Add(new Rectangle(140, 16, 40, 48));
+            playerAnimations.Add(Player.State.Idle, new Animation(idleFrames, TimeSpan.FromMilliseconds(100), true));
 
             //running
-            playerFrames.Add(new Rectangle(202, 20, 48, 44));
-            playerFrames.Add(new Rectangle(272, 16, 32, 47));
-            playerFrames.Add(new Rectangle(330, 20, 41, 44));
+            List<Rectangle> runningFrames = new List<Rectangle>();
+            runningFrames.Add(new Rectangle(202, 20, 48, 44));
+            runningFrames.Add(new Rectangle(272, 16, 32, 47));
+            runningFrames.Add(new Rectangle(330, 20, 41, 44));
+
+            playerAnimations.Add(Player.State.Running, new Animation(runningFrames, TimeSpan.FromMilliseconds(100), true));
 
             //jumping
-            playerFrames.Add(new Rectangle(390, 8, 52, 56));
-            playerFrames.Add(new Rectangle(261, 66, 53, 60));
+            List<Rectangle> jumpingFrames = new List<Rectangle>();
+            jumpingFrames.Add(new Rectangle(390, 8, 52, 56));
+            jumpingFrames.Add(new Rectangle(261, 66, 53, 60));
+            playerAnimations.Add(Player.State.Air, new Animation(jumpingFrames, TimeSpan.FromMilliseconds(100), false));
 
-            brick = new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(80, 80), Color.White, 0F, new Vector2(), 1f);
-            player = new Player(Content.Load<Texture2D>("FightingAndJumpingSpriteSheet"), new Vector2(50, 80), Color.White, 0f, new Vector2(), 1f, new Vector2(0, 0), playerFrames);
+
+            player = new Player(Content.Load<Texture2D>("FightingAndJumpingSpriteSheet"), new Vector2(300, 200), Color.White, 0f, new Vector2(), 1f, new Vector2(5, 0), playerAnimations);
             bricks = new List<Brick>();
+            bricks.Add(new Brick(Content.Load<Texture2D>("Bricks"), new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White, 0F, Vector2.Zero, 1f));
             // TODO: use this.Content to load your game content here
         }
 
@@ -77,14 +88,15 @@ namespace XnaPlatformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            KeyboardState ks = Keyboard.GetState();
 
-            for (int i = 0; i < bricks.Count; i++)
-            {
-                bricks[i].Draw(spriteBatch);
-            }
+
+
+
+            //loop through bricks
+            //if player intersects brick, set players ground = bricks Y position
+
+            player.KeyboardInput(ks);
             player.Update(gameTime);
             base.Update(gameTime);
         }
@@ -98,7 +110,11 @@ namespace XnaPlatformer
             spriteBatch.Begin();
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            brick.Draw(spriteBatch);
+
+            for (int i = 0; i < bricks.Count; i++)
+            {
+                bricks[i].Draw(spriteBatch);
+            }
             // TODO: Add your drawing code here
             player.Draw(spriteBatch);
             base.Draw(gameTime);
